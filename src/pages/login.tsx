@@ -1,9 +1,11 @@
+import { useRouter } from "next/router";
 import { useRef, useState } from "react";
 
 const Login = () => {
   const [message, setmessage] = useState('')
   const emailRef = useRef<HTMLInputElement>(null);
   const pwdRef = useRef<HTMLInputElement>(null)
+  const router = useRouter();
 
   const handleLogin = async () => {
     const resp = await fetch('http://localhost:3000/api/login', {
@@ -14,7 +16,8 @@ const Login = () => {
       body: JSON.stringify({ email: emailRef.current?.value, password: pwdRef.current?.value })
     })
     const json = await resp.json();
-    setmessage(json.message)
+    if (resp.status !== 200) setmessage(json.message)
+    else router.replace('/users');
   }
   return (<div>
     <input type="text" name="email" placeholder="email" ref={emailRef} />

@@ -4,7 +4,7 @@ import { open } from 'sqlite';
 import { jwtSecret } from '../../../secrets';
 
 const isAuthed = (fn: NextApiHandler) => async (req: NextApiRequest, res: NextApiResponse) => {
-  verify(req.cookies.auth?.split(' ')[1]!, jwtSecret, async (err, decoded) => {
+  verify(req.cookies.auth, jwtSecret, async (err, decoded) => {
     if (!err && decoded) {
       return await fn(req, res);
     }
