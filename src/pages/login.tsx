@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import { useRef, useState } from "react";
-import { fetcher } from "../lib/utils";
+import { logupHandler } from "../lib/auth";
 
 const Login = () => {
   const [message, setmessage] = useState('')
@@ -9,13 +9,10 @@ const Login = () => {
   const router = useRouter();
 
   const handleLogin = async () => {
-    const { error } = await fetcher('/api/login', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ email: emailRef.current?.value, password: pwdRef.current?.value })
-    })
+    const error = await logupHandler({
+      email: emailRef.current?.value,
+      password: pwdRef.current?.value
+    }, true)
     if (error) setmessage(error)
     else router.replace('/users');
   }

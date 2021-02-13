@@ -20,5 +20,5 @@ export default isAuthed(async (req: NextApiRequest, res: NextApiResponse) => {
     const result = statement.finalize();
     return res.status(201).json({ data: result });
   }
-  return res.status(404).json('Not Found');
+  return res.status(404).json({ error: 'Not Found' });
 });

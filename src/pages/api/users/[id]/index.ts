@@ -10,8 +10,8 @@ export default isAuthed(async (req: NextApiRequest, res: NextApiResponse) => {
     return res.status(201).json({ data: result });
   }
   if (req.method === 'GET') {
-    const user = await db.get(`SELECT id, name, email FROM users WHERE id=?`, [req.query.id]);
-    return res.status(200).json({ byId: req.query.id, user: user[0] });
+    const user = await db.get(`SELECT id, name, email FROM users where id=?`, [req.query.id]);
+    return res.status(200).json({ byId: req.query.id, data: user });
   }
   return res.status(404).send('NOT FOUND');
 });

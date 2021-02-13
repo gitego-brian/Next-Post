@@ -1,23 +1,22 @@
 import { useRouter } from "next/router";
 import { useRef, useState } from "react";
-import { fetcher } from "../lib/utils";
+import { logupHandler } from "../lib/auth";
 
 const Signup = () => {
   const [message, setmessage] = useState('')
   const nameRef = useRef<HTMLInputElement>(null);
   const emailRef = useRef<HTMLInputElement>(null);
   const pwdRef = useRef<HTMLInputElement>(null)
+  const router = useRouter();
 
   const handleSignup = async () => {
-    const { data, error } = await fetcher('/api/signup', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ name: nameRef.current?.value, email: emailRef.current?.value, password: pwdRef.current?.value })
-    })
+    const error = await logupHandler({
+      name: nameRef.current?.value,
+      email: emailRef.current?.value,
+      password: pwdRef.current?.value
+    }, false)
     if (error) setmessage(error)
-    else useRouter().replace('/login')
+    else router.replace('/login')
   }
   return (<div>
     <input type="text" name="name" placeholder="name" ref={nameRef} />

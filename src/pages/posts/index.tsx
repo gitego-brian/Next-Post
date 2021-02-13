@@ -1,4 +1,7 @@
 import { GetStaticProps } from 'next';
+import { useEffect } from 'react';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -7,10 +10,11 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import { makeStyles } from '@material-ui/core/styles';
-import Link from 'next/link';
+import { LinearProgress } from '@material-ui/core';
 import { Post as PostType } from '../../shared/post';
 import { PostsProps } from '../../shared/Posts.props';
 import { fetcher } from '../../lib/utils'
+import { usePosts } from '../../lib/hooks';
 
 const useStyles = makeStyles({
   table: {
@@ -18,9 +22,14 @@ const useStyles = makeStyles({
   },
 });
 
-const Posts = ({ posts }: PostsProps) => {
+const Posts = () => {
   const classes = useStyles();
+  const { posts, error, loading } = usePosts();
 
+  useEffect(() => {
+    if (error) useRouter().replace('/login')
+  }, [])
+  if (loading) return <LinearProgress />
   return (
     <TableContainer component={Paper}>
       <Table className={classes.table} aria-label="simple table">
@@ -33,10 +42,10 @@ const Posts = ({ posts }: PostsProps) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {posts?.map((post) => (
+          {posts?.map((post?: PostType) => (
             <TableRow key={post?.id}>
               <TableCell component="th" scope="row">
-                {post.id}
+                {post?.id}
               </TableCell>
               <TableCell align="right">{post?.title}</TableCell>
               <TableCell align="right">{post?.body}</TableCell>
@@ -49,13 +58,13 @@ const Posts = ({ posts }: PostsProps) => {
   );
 };
 
-export const getStaticProps: GetStaticProps = async () => {
-  const { data: posts, error } = await fetcher('/api/posts');
-  return {
-    props: {
-      posts,
-      error,
-    },
-  };
-}
+// export const getStaticProps: GetStaticProps = async () => {
+//   const { data: posts, error } = await fetcher('/api/posts');
+//   return {
+//     props: {
+//       posts,
+//       error,
+//     },
+//   };
+// }
 export default Posts;
