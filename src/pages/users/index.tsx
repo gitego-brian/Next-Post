@@ -1,9 +1,7 @@
 import { LinearProgress } from "@material-ui/core";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
-import useSWR from 'swr'
 import { useUsers } from "../../lib/hooks";
-import { fetcher } from "../../lib/utils";
 
 const Users = () => {
   const router = useRouter()

@@ -17,7 +17,7 @@ const useStyles = makeStyles({
   },
 });
 
-const Posts = ({ posts }:PostsProps) => {
+const Posts = ({ posts }: PostsProps) => {
   const classes = useStyles();
 
   return (
@@ -49,10 +49,10 @@ const Posts = ({ posts }:PostsProps) => {
 };
 
 export const getStaticProps: GetStaticProps = async () => {
-  const res:{data?: Post[]} = await (await fetch('http://localhost:3000/api/posts')).json();
+  const res: { data?: Post[] } = await (await fetch('/api/posts')).json();
   return {
     props: {
-      posts:res.data
+      posts: res.data
     },
   };
 }

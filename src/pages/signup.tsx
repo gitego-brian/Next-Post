@@ -7,7 +7,7 @@ const Signup = () => {
   const pwdRef = useRef<HTMLInputElement>(null)
 
   const handleSignup = async () => {
-    const resp = await fetch('http://localhost:3000/api/signup', {
+    const resp = await fetch('/api/signup', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
