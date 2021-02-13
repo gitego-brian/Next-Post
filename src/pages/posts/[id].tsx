@@ -7,20 +7,20 @@ const Post = ({ post }: PostProps) => {
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const posts: PostType[] = await (await fetch('/api/posts')).json();
-  const paths = posts.map((p) => `/posts/${p.id}`);
+  // const posts: PostType[] = await (await fetch('/api/posts')).json();
+  // const paths = posts.map((p) => `/posts/${p.id}`);
   return {
-    paths,
+    paths: [],
     fallback: false,
   };
 }
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-  const post = await (await fetch('/api/posts/' + params?.id)).json();
+  // const post = await (await fetch('/api/posts/' + params?.id)).json();
 
   return {
     props: {
-      post,
+      post: {},
     },
   };
 }

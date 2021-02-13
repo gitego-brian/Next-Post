@@ -33,13 +33,13 @@ const Posts = ({ posts }: PostsProps) => {
         </TableHead>
         <TableBody>
           {posts?.map((post) => (
-            <TableRow key={post.id}>
+            <TableRow key={post?.id}>
               <TableCell component="th" scope="row">
                 {post.id}
               </TableCell>
-              <TableCell align="right">{post.title}</TableCell>
-              <TableCell align="right">{post.body}</TableCell>
-              <TableCell align="right">{post.userId}</TableCell>
+              <TableCell align="right">{post?.title}</TableCell>
+              <TableCell align="right">{post?.body}</TableCell>
+              <TableCell align="right">{post?.userId}</TableCell>
             </TableRow>
           ))}
         </TableBody>
@@ -49,10 +49,10 @@ const Posts = ({ posts }: PostsProps) => {
 };
 
 export const getStaticProps: GetStaticProps = async () => {
-  const res: { data?: Post[] } = await (await fetch('/api/posts')).json();
+  // const res: { data?: Post[] } = await (await fetch('/api/posts')).json();
   return {
     props: {
-      posts: res.data
+      posts: []
     },
   };
 }

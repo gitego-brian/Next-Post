@@ -7,16 +7,16 @@ const Signup = () => {
   const pwdRef = useRef<HTMLInputElement>(null)
 
   const handleSignup = async () => {
-    const resp = await fetch('/api/signup', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ name: nameRef.current?.value, email: emailRef.current?.value, password: pwdRef.current?.value })
-    })
-    const json = await resp.json();
-    setmessage(json.message)
-    console.log(json.data)
+    // const resp = await fetch('/api/signup', {
+    //   method: 'POST',
+    //   headers: {
+    //     'Content-Type': 'application/json'
+    //   },
+    //   body: JSON.stringify({ name: nameRef.current?.value, email: emailRef.current?.value, password: pwdRef.current?.value })
+    // })
+    // const json = await resp.json();
+    // setmessage(json.message)
+    console.log('message')
   }
   return (<div>
     <input type="text" name="name" placeholder="name" ref={nameRef} />
