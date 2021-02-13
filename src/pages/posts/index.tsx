@@ -50,7 +50,7 @@ const Posts = ({ posts }: PostsProps) => {
 };
 
 export const getStaticProps: GetStaticProps = async () => {
-  const { data: posts, error }: { data: PostType[], error?: string } = await fetcher('/api/posts');
+  const { data: posts, error } = await fetcher('/api/posts');
   return {
     props: {
       posts,
