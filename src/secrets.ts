@@ -1,1 +1,10 @@
-export const jwtSecret = 'jhf7rty487tgrvbi4t48ghv47ty4hgvbiref3478fhbciefh34r8fh43cn';
+interface Secrets {
+  JWT_KEY: any;
+  DOMAIN_URL: any;
+}
+const secrets: Secrets = {
+  JWT_KEY: process.env.JWT_KEY,
+  DOMAIN_URL: process.env.NODE_ENV === 'production' ? process.env.NEXT_PUBLIC_VERCEL_URL : 'http://localhost:3000',
+};
+
+export default secrets;

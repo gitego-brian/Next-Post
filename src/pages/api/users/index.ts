@@ -1,16 +1,6 @@
-import { verify } from 'jsonwebtoken';
-import { NextApiHandler, NextApiRequest, NextApiResponse } from 'next';
+import { NextApiRequest, NextApiResponse } from 'next';
 import { open } from 'sqlite';
-import { jwtSecret } from '../../../secrets';
-
-const isAuthed = (fn: NextApiHandler) => async (req: NextApiRequest, res: NextApiResponse) => {
-  verify(req.cookies.auth, jwtSecret, async (err, decoded) => {
-    if (!err && decoded) {
-      return await fn(req, res);
-    }
-    res.status(401).json({ message: 'Unauthenticated' });
-  });
-};
+import { isAuthed } from '../../../lib/auth';
 
 export default isAuthed(async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method !== 'GET') {

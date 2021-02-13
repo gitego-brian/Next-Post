@@ -1,16 +1,7 @@
-import { verify } from 'jsonwebtoken';
-import { NextApiHandler, NextApiRequest, NextApiResponse } from 'next';
+import { NextApiRequest, NextApiResponse } from 'next';
 import { open } from 'sqlite';
-import { jwtSecret } from '../../../../secrets';
+import { isAuthed } from '../../../../lib/auth';
 
-const isAuthed = (fn: NextApiHandler) => async (req: NextApiRequest, res: NextApiResponse) => {
-  verify(req.cookies.auth?.split(' ')[1]!, jwtSecret, async (err, decoded) => {
-    if (!err && decoded) {
-      return await fn(req, res);
-    }
-    res.status(401).json({ message: 'Unauthenticated' });
-  });
-};
 export default isAuthed(async (req: NextApiRequest, res: NextApiResponse) => {
   const db = await open('./mydb.sqlite');
   if (req.method === 'PUT') {

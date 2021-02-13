@@ -16,9 +16,6 @@ const Index = () => {
         <li>
           <Link href="/signup" passHref><a>Signup</a></Link>
         </li>
-        {/* <li>
-          <Link><a></a></Link>
-        </li> */}
       </ul>
     </div>
   );

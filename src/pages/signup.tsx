@@ -1,4 +1,6 @@
+import { useRouter } from "next/router";
 import { useRef, useState } from "react";
+import { fetcher } from "../lib/utils";
 
 const Signup = () => {
   const [message, setmessage] = useState('')
@@ -7,16 +9,15 @@ const Signup = () => {
   const pwdRef = useRef<HTMLInputElement>(null)
 
   const handleSignup = async () => {
-    // const resp = await fetch('/api/signup', {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application/json'
-    //   },
-    //   body: JSON.stringify({ name: nameRef.current?.value, email: emailRef.current?.value, password: pwdRef.current?.value })
-    // })
-    // const json = await resp.json();
-    // setmessage(json.message)
-    console.log('message')
+    const { data, error } = await fetcher('/api/signup', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ name: nameRef.current?.value, email: emailRef.current?.value, password: pwdRef.current?.value })
+    })
+    if (error) setmessage(error)
+    else useRouter().replace('/login')
   }
   return (<div>
     <input type="text" name="name" placeholder="name" ref={nameRef} />

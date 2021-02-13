@@ -7,7 +7,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Link from 'next/link';
-import { Post } from '../../shared/post';
+import { Post as PostType } from '../../shared/post';
 import { PostsProps } from '../../shared/Posts.props';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -49,10 +49,11 @@ const Posts = ({ posts }: PostsProps) => {
 };
 
 export const getStaticProps: GetStaticProps = async () => {
-  // const res: { data?: Post[] } = await (await fetch('/api/posts')).json();
+  const { data: posts, error }: { data: PostType[], error?: string } = await fetcher('/api/posts');
   return {
     props: {
-      posts: []
+      posts,
+      error,
     },
   };
 }

@@ -1,4 +1,5 @@
 import { GetStaticPaths, GetStaticProps } from "next";
+import { fetcher } from "../../lib/utils";
 import { Post as PostType } from "../../shared/post";
 import { PostProps } from "../../shared/Post.props";
 
@@ -7,20 +8,20 @@ const Post = ({ post }: PostProps) => {
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  // const posts: PostType[] = await (await fetch('/api/posts')).json();
-  // const paths = posts.map((p) => `/posts/${p.id}`);
+  const { data: posts } = await fetcher('/api/posts');
+  const paths = posts.map((p: PostType) => `/posts/${p.id}`);
   return {
-    paths: [],
+    paths,
     fallback: false,
   };
 }
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-  // const post = await (await fetch('/api/posts/' + params?.id)).json();
-
+  const { data: post, error } = await fetcher('/api/posts/' + params?.id);
   return {
     props: {
-      post: {},
+      post,
+      error
     },
   };
 }

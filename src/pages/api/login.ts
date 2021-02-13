@@ -3,7 +3,7 @@ import { open } from 'sqlite';
 import bcrypt from 'bcrypt';
 import cookie from 'cookie';
 import { sign } from 'jsonwebtoken';
-import { jwtSecret } from '../../secrets';
+import secrets from '../../secrets';
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   const db = await open('./mydb.sqlite');
@@ -12,7 +12,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     bcrypt.compare(req.body.password, user.password, (err, result) => {
       if (err) res.status(401).send('UNAUTHORIZED');
       else {
-        const jwt = sign({ sub: user.id, myUserEmail: user.email }, jwtSecret, { expiresIn: '1h' });
+        const jwt = sign({ sub: user.id, myUserEmail: user.email }, secrets.JWT_KEY, { expiresIn: '1h' });
         res.setHeader(
           'Set-Cookie',
           cookie.serialize('auth', jwt, {
