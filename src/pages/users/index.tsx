@@ -1,16 +1,11 @@
 import { LinearProgress } from "@material-ui/core";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
 import { useUsers } from "../../lib/hooks";
 
 const Users = () => {
   const router = useRouter()
   const { users, loading, error } = useUsers()
-
-  useEffect(() => {
-    if (error) router.replace('/login')
-  }, [])
-
+  if (error) router.replace('/login')
   if (loading) return <LinearProgress />
   return (
     <div>

@@ -5,14 +5,16 @@ import Head from 'next/head';
 import { ThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import theme from '../theme';
-import { LinearProgress } from '@material-ui/core';
 import { AppProps } from 'next/app';
+import NProgress from 'nprogress'
+import 'nprogress/nprogress.css';
 
-export default function MyApp(props:AppProps) {
+export default function MyApp(props: AppProps) {
   const { Component, pageProps } = props;
-  const [loading, setloading] = React.useState(false);
-  Router.events.on('routeChangeStart', () => setloading(true));
-  Router.events.on('routeChangeComplete', () => setloading(false));
+  NProgress.configure({ showSpinner: false });
+  Router.events.on('routeChangeStart', () => NProgress.start());
+  Router.events.on('routeChangeComplete', () => NProgress.done());
+  Router.events.on('routeChangeError', () => NProgress.done());
 
   React.useEffect(() => {
     // Remove the server-side injected CSS.
@@ -30,8 +32,7 @@ export default function MyApp(props:AppProps) {
       <ThemeProvider theme={theme}>
         {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
         <CssBaseline />
-        {loading && <LinearProgress />}
-        {!loading && <Component {...pageProps} />}
+        <Component {...pageProps} />
       </ThemeProvider>
     </React.Fragment>
   );

@@ -1,6 +1,3 @@
-import { GetStaticProps } from 'next';
-import { useEffect } from 'react';
-import Link from 'next/link';
 import { useRouter } from 'next/router';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -11,9 +8,7 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import { makeStyles } from '@material-ui/core/styles';
 import { LinearProgress } from '@material-ui/core';
-import { Post as PostType } from '../../shared/post';
-import { PostsProps } from '../../shared/Posts.props';
-import { fetcher } from '../../lib/utils'
+import { Post as PostType } from '../../models/post';
 import { usePosts } from '../../lib/hooks';
 
 const useStyles = makeStyles({
@@ -23,12 +18,10 @@ const useStyles = makeStyles({
 });
 
 const Posts = () => {
+  const router = useRouter()
   const classes = useStyles();
   const { posts, error, loading } = usePosts();
-
-  useEffect(() => {
-    if (error) useRouter().replace('/login')
-  }, [])
+  if (error) router.replace('/login')
   if (loading) return <LinearProgress />
   return (
     <TableContainer component={Paper}>

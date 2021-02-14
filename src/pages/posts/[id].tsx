@@ -1,19 +1,11 @@
 import { LinearProgress } from "@material-ui/core";
-import { GetStaticPaths, GetStaticProps } from "next";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
 import { usePost } from "../../lib/hooks";
-import { fetcher } from "../../lib/utils";
-import { Post as PostType } from "../../shared/post";
-import { PostProps } from "../../shared/Post.props";
 
 const Post = () => {
   const router = useRouter();
   const { post, error, loading } = usePost(router.query.id);
-
-  useEffect(() => {
-    if (error) router.replace('/login')
-  }, [])
+  if (error) router.replace('/login')
   if (loading) return <LinearProgress />
   return <pre>{JSON.stringify(post, null, 2)}</pre>;
 };

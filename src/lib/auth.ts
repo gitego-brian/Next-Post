@@ -8,7 +8,7 @@ export const isAuthed = (fn: NextApiHandler) => async (req: NextApiRequest, res:
     if (!err && decoded) {
       return await fn(req, res);
     }
-    res.status(401).json({ message: 'Unauthenticated' });
+    res.status(401).json({ error: 'Unauthenticated' });
   });
 };
 

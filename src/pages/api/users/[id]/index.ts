@@ -13,5 +13,5 @@ export default isAuthed(async (req: NextApiRequest, res: NextApiResponse) => {
     const user = await db.get(`SELECT id, name, email FROM users where id=?`, [req.query.id]);
     return res.status(200).json({ byId: req.query.id, data: user });
   }
-  return res.status(404).send('NOT FOUND');
+  return res.status(404).json({ error: 'NOT FOUND' });
 });
